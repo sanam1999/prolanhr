@@ -1,0 +1,15 @@
+const notification = await Notification.create({
+            userId: admin._id, //resiver id 
+            senderName: req.user?.name, // sender name
+            position: req.user?.role,//sender role
+            title: "Leave Request",
+            message: reason,
+            type: "info",
+            read: false,
+            time: new Date()
+        });
+
+        // Emit real-time notification
+        eventEmitter.emit(`notify:${employeeId}`, notification);
+
+        // nodemailer here
