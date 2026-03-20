@@ -1,0 +1,117 @@
+/* Container styling */
+.toolset-wrapper {
+  padding: 2rem;
+  background-color: #2d2d2d;
+  min-height: 100vh;
+}
+
+/* Category title */
+.category-title {
+  text-align: center;
+  font-size: 1.8rem;
+  color: #fff;
+  margin-bottom: 1rem;
+}
+
+/* Grid layout for tools */
+.tool-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: center;
+}
+
+/* Individual tool card */
+.tool-card {
+  width: 260px;
+  background-color: #404040;
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  color: #ffffff;
+  transition: transform 0.2s ease;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.4s ease forwards;
+}
+
+/* Hover effect on tool card */
+.tool-card:hover {
+  transform: scale(1.03);
+}
+
+/* Tool icon styling */
+.tool-icon {
+  font-size: 3.2rem;
+  color: #61dafb;
+  margin-bottom: 1rem;
+}
+
+/* Tool name */
+.tool-name {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+}
+
+/* Tool description */
+.tool-desc {
+  font-size: 0.95rem;
+  min-height: 70px;
+  margin-bottom: 1rem;
+}
+
+/* Launch button */
+.tool-button {
+  background-color: #007acc;
+  color: white;
+  padding: 0.5rem 1rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border-radius: 4px;
+  text-decoration: none;
+  display: inline-block;
+  transition: background-color 0.2s ease;
+}
+
+.tool-button:hover {
+  background-color: #1496e2;
+}
+
+/* Fade-in animation */
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+.tool-card:nth-child(even) {animation-delay: 0.5s;}
+.tool-card:nth-child(odd) {animation-delay: 0.9s;}
+
+/* 
+.tool-card:nth-child(6),
+.tool-card:nth-child(7),
+.tool-card:nth-child(8),
+.tool-card:nth-child(9),
+.tool-card:nth-child(10) {
+  animation-delay: 1s;
+}
+
+.tool-card:nth-child(11),
+.tool-card:nth-child(12),
+.tool-card:nth-child(13),
+.tool-card:nth-child(14),
+.tool-card:nth-child(15) {
+  animation-delay: 1.5s;
+}
+
+.tool-card:nth-child(16),
+.tool-card:nth-child(17),
+.tool-card:nth-child(18),
+.tool-card:nth-child(19),
+.tool-card:nth-child(20) {
+  animation-delay: 2s;
+} */
