@@ -32,7 +32,7 @@ function checkOutDisabledReason(now: Date, hasCheckedIn: boolean): string | null
     if (!hasCheckedIn) return "You must check in first";
     const mins = now.getHours() * 60 + now.getMinutes();
     if (mins < 12 * 60) return "Check-out opens at 12:00 PM";
-    if (mins > 18 * 60) return "Check-out closed after 4:00 PM";
+    if (mins > 23 * 60) return "Check-out closed after 4:00 PM";
     return null;
 }
 
