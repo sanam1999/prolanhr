@@ -14,10 +14,10 @@ const leaveRequest = require("./routes/leaveRequest.route.js");
 const profile = require("./routes/profile.route.js");
 const teamtrack = require("./routes/teamtrack.route.js");
 const { router: notificationRoutes } = require("./routes/notification");
-
+const { getSriLankaTime } = require('./utils/srilankantime.js')
 const { Employee } = require("./models/employee.model");
 
-const { authMiddleware, isAdmin, isEmployee } = require("./middleware/authMiddleware");
+const { authMiddleware } = require("./middleware/authMiddleware");
 
 const project = require('./routes/project.route.js')
 
@@ -27,12 +27,11 @@ const { startScheduler } = require("./utils/scheduler.js")
 
 startScheduler();
 app.use(cors({
-    origin: [process.env.WEBSITE_URL, process.env.ADMIN_URL],
+    origin: "*",
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
 }));
-
 passport.use(new LocalStrategy({ usernameField: "email" }, Employee.authenticate()));
 app.use(passport.initialize());
 app.use(express.json());
@@ -44,12 +43,14 @@ mongoose.connect(process.env.MONGO_URL)
 
 app.use((req, res, next) => {
     console.log(`${req.method} ${req.originalUrl}`);
+    console.log(req.get('referer'))
     next();
 });
 
 
 app.get("/", async (req, res) => {
-    res.send("api is working")
+    console.log(getSriLankaTime())
+    res.send("api is working ")
 })
 
 

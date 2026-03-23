@@ -6,7 +6,7 @@ const notification = await Notification.create({
             message: reason,
             type: "info",
             read: false,
-            time: new Date()
+            time: getSriLankaTime()
         });
 
         // Emit real-time notification

@@ -1,10 +1,10 @@
-const { f200, f400,  f404, f500 } = require('../utils/res')
+const { f200, f400, f404, f500 } = require('../utils/res')
 const { Employee } = require("../models/employee.model");
 const { Project } = require("../models/project.model");
 const Notification = require("../models/notification.model");
 const { eventEmitter } = require("../routes/notification");
-const { sendProjectAssignmentEmail }  = require('../utils/mailer')
-
+const { sendProjectAssignmentEmail } = require('../utils/mailer')
+const { getSriLankaTime } = require('../utils/srilankantime')
 module.exports.employeeProject = async (req, res) => {
     try {
         const project = await Project.find({ employeeid: req.params.id }).populate('employeeid')
@@ -127,7 +127,7 @@ module.exports.postasingEmployee = async (req, res) => {
             message: `You have been assigned to the project "${project.name}"`,
             type: "info",
             read: false,
-            time: new Date().toLocaleTimeString(),
+            time: getSriLankaTime().toLocaleTimeString(),
         });
         sendProjectAssignmentEmail(employeeExists.email, employeeExists.fullName, project.name,)
 

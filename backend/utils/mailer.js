@@ -1,6 +1,6 @@
 const nodemailer = require('nodemailer');
 require('dotenv').config();
-
+const { getSriLankaTime } = require('./srilankantime')
 const transporter = nodemailer.createTransport({
   host: 'mail.prolabr.com',
   port: 465,
@@ -464,7 +464,7 @@ async function sendWelcomeEmail(toEmail, name, tempPassword) {
 async function sendLoginNotificationEmail(toEmail, userName) {
   const subject = "New Login to Your Prolab R Account";
 
-  const loginTime = new Date().toLocaleString("en-US", {
+  const loginTime = getSriLankaTime().toLocaleString("en-US", {
     weekday: "long",
     year: "numeric",
     month: "long",

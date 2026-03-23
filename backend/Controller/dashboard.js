@@ -5,6 +5,7 @@ const { Employee } = require("../models/employee.model");
 const { Department } = require("../models/department.model");
 const { Attendance } = require("../models/attendance.model");
 const { Project } = require("../models/project.model");
+const { getSriLankaTime } = require('../utils/srilankantime')
 module.exports.admin = async (req, res) => {
     try {
         const department = await Department.find({});
@@ -57,7 +58,7 @@ module.exports.employee = async (req, res) => {
         if (!employee) return f404("Employee not found", res);
 
         const projects = await Project.find({ employeeid: id });
-        const today1 = new Date();
+        const today1 = getSriLankaTime();
 
         const attendances = await Attendance.find({
             employeeId: id,
@@ -126,7 +127,7 @@ module.exports.employee = async (req, res) => {
             .map(([date, status]) => ({ date, status }))
             .sort((a, b) => a.date.localeCompare(b.date));
 
-        const today = new Date();
+        const today = getSriLankaTime();
         const last10WorkingDays = [];
         const current = new Date(today);
 

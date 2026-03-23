@@ -5,7 +5,7 @@ const { Attendance } = require("../models/attendance.model");
 const { Project } = require("../models/project.model");
 const { Holiday } = require("../models/holiday.model");
 const Notification = require("../models/notification.model");
-
+const { getSriLankaTime } = require('./srilankantime')
 function getLastTenWeekHours(hours) {
     return hours.slice().reduce((sum, h) => sum + h, 0);
 }
@@ -24,7 +24,7 @@ function attendanceStatuscount(attendance) {
     return { present, absent, late, half_day };
 }
 async function getatandencePRG() {
-    const now = new Date();
+    const now = getSriLankaTime();
 
     const year = now.getFullYear();
     const mon = String(now.getMonth() + 1).padStart(2, "0");
@@ -56,7 +56,7 @@ async function getatandencePRG() {
     return record;
 }
 async function getAtandence() {
-    const today = new Date();
+    const today = getSriLankaTime();
     today.setHours(0, 0, 0, 0);
     const tomorrow = new Date(today);
     tomorrow.setDate(tomorrow.getDate() + 1);

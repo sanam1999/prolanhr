@@ -8,6 +8,12 @@ export default defineConfig(({ mode }) => ({
   server: {
     host: "::",
     port: 8090,
+    allowedHosts: [
+      "admin.prolabr.com",
+      "www.admin.prolabr.com",
+      "localhost",
+      "127.0.0.1"
+    ],
     hmr: {
       overlay: false,
     },

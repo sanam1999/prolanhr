@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router({ mergeParams: true });
 // const { isAuthenticated, isowner, listingvalidate } = require('../utils/Middleware.js');
 const { getEmployeeLeaveRequests, getAllLeaveRequests, updateLeaveRequestStatus, createLeaveRequest, deleteLeaveRequest } = require('../Controller/leaveRequest')
-const { authMiddleware, isAdmin, isEmployee } = require("../middleware/authMiddleware");
+const { isAdmin, isEmployee } = require("../middleware/authMiddleware");
 router.route('/')
     .get(isAdmin, getAllLeaveRequests)
     .patch(isAdmin, updateLeaveRequestStatus)

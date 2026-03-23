@@ -1,8 +1,7 @@
 const mongoose = require("mongoose");
 const { Department } = require("./department.model.js");
 const { Employee } = require("./employee.model.js");
-const LeaveRequest = require("./leaveRequest.model.js");
-const Attendance = require("./attendance.model.js").Attendance;
+
 
 const MONGO_URI = process.env.MONGO_URL || "mongodb://127.0.0.1:27017/hrms";
 
@@ -29,7 +28,7 @@ const registerAndAssign = async (employeeData, password) => {
 const generateMonthDays = (joinDate) => {
   const days = [];
   const hours = [];
-  const today = new Date();
+  const today = getSriLankaTime();
   const join = new Date(joinDate);
   join.setHours(0, 0, 0, 0);
 
@@ -82,7 +81,7 @@ const seedData = async () => {
     const emp1Join = new Date("2022-06-01");
     const emp1 = await registerAndAssign({
       fullName: "Bob Martinez",
-      email: "bob@company.com",
+      email: "shresthasanam288@gmail.com",
       accType: "employee",
       department: softwareEng._id,
       status: "active",
@@ -97,8 +96,8 @@ const seedData = async () => {
     const emp2Join = new Date("2023-03-15");
     const emp2 = await registerAndAssign({
       fullName: "Charlie Davis",
-      email: "charlie@company.com",
-      accType: "employee",
+      email: "shresthasanam1999@gmail.com",
+      accType: "admin",
       department: aiResearch._id,
       status: "active",
       joinDate: emp2Join,

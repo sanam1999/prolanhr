@@ -13,7 +13,7 @@ const token = localStorage.getItem("token");
 
 export interface Employee {
   _id: string;
-  name: string;
+  fullName: string;
   email: string;
   role: string;
   department: string;
@@ -176,7 +176,7 @@ export default function Departments() {
                       <img src={emp.avatar} alt="avatar" className="h-full w-full object-cover" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm font-semibold truncate">{emp.name}</p>
+                      <p className="text-sm font-semibold truncate">{emp.fullName}</p>
                       <p className="text-xs text-muted-foreground truncate">{emp.role}</p>
                     </div>
                     <Badge

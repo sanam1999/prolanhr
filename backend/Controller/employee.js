@@ -1,12 +1,13 @@
-const { f200, f201, f400,  f404, f500 } = require('../utils/res')
+const { f200, f201, f400, f404, f500 } = require('../utils/res')
 const { addstatus, getAtandence, } = require('../utils/helper')
 const LeaveRequest = require("../models/leaveRequest.model");
 const { Employee } = require("../models/employee.model");
 const { Department } = require("../models/department.model");
 const { Attendance } = require("../models/attendance.model");
 const { Project } = require("../models/project.model");
-const {  sendWelcomeEmail, } = require('../utils/mailer.js')
+const { sendWelcomeEmail, } = require('../utils/mailer.js')
 const { v4: uuidv4 } = require("uuid");
+const { getSriLankaTime } = require('../utils/srilankantime.js')
 
 
 module.exports.getemployee = async (req, res) => {
@@ -80,7 +81,7 @@ module.exports.postemplyee = async (req, res) => {
             salary: salary || 0, // ← Add default value
             phone: phone || "", // ← Add default value
             role: role,
-            joinDate: joinDate || new Date(),
+            joinDate: joinDate || getSriLankaTime(),
         });
 
         // Register employee with password
@@ -109,7 +110,7 @@ module.exports.getDepartmentEmployeesWithStatus = async (req, res) => {
         const employees = await Department.findById({ _id: _id }).populate("employees");
         if (!employees) return f404("Department not found", res);
 
-        const today = new Date();
+        const today = getSriLankaTime();
         today.setHours(0, 0, 0, 0);
         const tomorrow = new Date(today);
         tomorrow.setDate(tomorrow.getDate() + 1);

@@ -1,9 +1,9 @@
 const { f200, f201, f400, f403, f404, f500 } = require('../utils/res')
 const LeaveRequest = require("../models/leaveRequest.model");
 const { Employee } = require("../models/employee.model");
-
+const { getSriLankaTime } = require('../utils/srilankantime')
 const Notification = require("../models/notification.model");
-const {  eventEmitter } = require("../routes/notification");
+const { eventEmitter } = require("../routes/notification");
 const { sendLeaveRequestConfirmationEmail, sendAdminLeaveNotificationEmail, sendLeaveStatusEmail } = require('../utils/mailer.js')
 module.exports.getEmployeeLeaveRequests = async (req, res) => {
     try {
@@ -41,15 +41,13 @@ module.exports.getAllLeaveRequests = async (req, res) => {
 };
 module.exports.updateLeaveRequestStatus = async (req, res) => {
     try {
-        const { _id, status, rejectionReason } = req.body;
+        const { _id, status } = req.body;
+        console.log(req.body)
         if (!_id) {
             return f400("Leave request ID (_id) is required", res);
         }
         if (!status || !["pending", "approved", "rejected"].includes(status)) {
             return f400("Valid status is required: pending, approved, or rejected", res);
-        }
-        if (status === "rejected" && !rejectionReason) {
-            return f400("Rejection reason is required when rejecting", res);
         }
         const admin = await Employee.findById(req.user?.id);
         if (admin?.accType !== "admin") {
@@ -67,12 +65,11 @@ module.exports.updateLeaveRequestStatus = async (req, res) => {
         };
 
         if (status === "approved") {
-            updateData.approvedAt = new Date();
+            updateData.approvedAt = getSriLankaTime();
             updateData.approvedBy = req.user?.id;
         } else if (status === "rejected") {
-            updateData.rejectedAt = new Date();
+            updateData.rejectedAt = getSriLankaTime();
             updateData.rejectedBy = req.user?.id;
-            updateData.rejectionReason = rejectionReason;
         }
         const updatedLeave = await LeaveRequest.findByIdAndUpdate(
             _id,
@@ -112,7 +109,7 @@ module.exports.updateLeaveRequestStatus = async (req, res) => {
                 message: notificationMessage,
                 type: status === "approved" ? "success" : status === "rejected" ? "warning" : "info",
                 read: false,
-                time: new Date()
+                time: getSriLankaTime()
             });
             eventEmitter.emit(`notify:${updatedLeave.employeeId._id}`, notification);
 
@@ -197,7 +194,7 @@ module.exports.createLeaveRequest = async (req, res) => {
                     message: `${employee.fullName} has requested ${type} from ${new Date(startDate).toLocaleDateString()} to ${new Date(endDate).toLocaleDateString()}`,
                     type: "info",
                     read: false,
-                    time: new Date()
+                    time: getSriLankaTime()
                 });
 
                 // Emit real-time socket notification

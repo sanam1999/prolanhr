@@ -5,7 +5,7 @@ const Notification = require("../models/notification.model.js");
 const LeaveRequest = require("../models/leaveRequest.model");
 const { eventEmitter } = require("../routes/notification"); //  make sure this is imported
 const cron = require('node-cron');
-
+const { getSriLankaTime } = require('./srilankantime.js')
 const {
     sendCheckInReminderEmail,
     sendTaskReminder10AM,
@@ -17,10 +17,10 @@ const {
 
 async function findEmployees() {
 
-    const startOfDay = new Date();
+    const startOfDay = getSriLankaTime();
     startOfDay.setHours(0, 0, 0, 0);
 
-    const endOfDay = new Date();
+    const endOfDay = getSriLankaTime();
     endOfDay.setHours(23, 59, 59, 999);
 
     const todayAttendance = await Attendance.find({
@@ -69,7 +69,7 @@ async function sendNotificationToMany(employeeIds, msg) {
             message: msg.message,
             type: "info",
             read: false,
-            time: new Date().toLocaleTimeString(),
+            time: getSriLankaTime().toLocaleTimeString(),
         })
     );
 
@@ -88,7 +88,7 @@ async function markAttendance() {
         status: "active"
     }).select("_id");
 
-    const today = new Date();
+    const today = getSriLankaTime();
     const dateString = today.toISOString().split('T')[0]; // "2026-03-19"
     const startOfDay = new Date(`${dateString}T00:00:00.000Z`);
     const endOfDay = new Date(`${dateString}T23:59:59.999Z`);
@@ -155,7 +155,6 @@ module.exports.startScheduler = () => {
             title: "Check-In Reminder",
             message: "Please mark your attendance before 8:30 AM.",
         });
-
         console.log('Check-in reminder sent.');
     }, options);
 

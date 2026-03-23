@@ -13,9 +13,11 @@ const whoIs = async (req, res, next) => {
         }
 
         const requestUrl = req.get('referer');
-        const websiteUrl = process.env.WEBSITE_URL;
-        const adminUrl = process.env.ADMIN_URL;
-
+        const websiteUrl = `${process.env.WEBSITE_URL}/`;
+        const adminUrl = `${process.env.ADMIN_URL}/`;
+        console.log('===================')
+        console.log(requestUrl)
+        console.log(adminUrl)
         // ✅ Better URL matching (handles trailing slashes)
         const isFromWebsite = requestUrl?.startsWith(websiteUrl);
         const isFromAdmin = requestUrl?.startsWith(adminUrl);

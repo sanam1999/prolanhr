@@ -1,5 +1,5 @@
 const { f200, f201, f400, f404, f409, f500 } = require('../utils/res')
-
+const { getSriLankaTime } = require('../utils/srilankantime')
 const { Holiday } = require("../models/holiday.model");
 module.exports.getHolidays = async (req, res) => {
     try {
@@ -30,7 +30,7 @@ module.exports.getHolidays = async (req, res) => {
 };
 module.exports.getTodayHolidayStatus = async (req, res) => {
     try {
-        const today = new Date();
+        const today = getSriLankaTime();
         const dayOfWeek = today.getDay(); // 0 = Sunday, 6 = Saturday
 
         if (dayOfWeek === 0 || dayOfWeek === 6) {

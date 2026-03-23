@@ -1,6 +1,6 @@
 const { f200, f400, f500 } = require('../utils/res')
 const { Attendance } = require("../models/attendance.model");
-
+const { getSriLankaTime } = require('../utils/srilankantime')
 module.exports.getEmployeeAttendance = async (req, res) => {
     try {
         const _id = req.params._id
@@ -24,7 +24,7 @@ module.exports.addAttendanceLog = async (req, res) => {
             return f400(null, "Note must be 300 characters or less", res);
         }
 
-        const today = new Date();
+        const today = getSriLankaTime();
 
         const startOfDay = new Date(today);
         startOfDay.setHours(0, 0, 0, 0);
@@ -126,7 +126,7 @@ module.exports.checkInAttendance = async (req, res) => {
         const PRESENT_DEADLINE = 8 * 60 + 1
         const LATE_DEADLINE = 10 * 60 + 0;    // 10:00 - mark as late
         const CHECKOUT_DEADLINE = 12 * 60 + 0; // 12:00 - last check-in time
-        const today = new Date();
+        const today = getSriLankaTime();
         console.log(today)
         const hours = today.getHours();
         const minutes = today.getMinutes();
@@ -193,7 +193,7 @@ module.exports.checkOutAttendance = async (req, res) => {
             return f400(null, "Employee ID is required", res);
         }
 
-        const today = new Date();
+        const today = getSriLankaTime();
         const hours = today.getHours();
         const minutes = today.getMinutes();
         const totalMinutes = hours * 60 + minutes;
