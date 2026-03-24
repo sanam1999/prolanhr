@@ -196,12 +196,16 @@ module.exports.checkOutAttendance = async (req, res) => {
         const today = getSriLankaTime();
         const hours = today.getHours();
         const minutes = today.getMinutes();
+        const formattedTime = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+        console.log(today)
+        console.log(formattedTime); // 19:53
+
         const totalMinutes = hours * 60 + minutes;
 
         const CHECKOUT_TIME = 13 * 60;
 
         if (totalMinutes < CHECKOUT_TIME) {
-            return f400(null, `You can only checkout after 13:00. Current time: ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`, res);
+            return f400(null, `You can only checkout after 13:00. Current time: ${formattedTime}`, res);
         }
 
         const startOfDay = new Date(today);
@@ -232,7 +236,6 @@ module.exports.checkOutAttendance = async (req, res) => {
         if (total_hours < 5) {
             status = "half-day";
         } else {
-
             status = attendance.status;
         }
 
@@ -247,7 +250,7 @@ module.exports.checkOutAttendance = async (req, res) => {
         );
 
         return f200({
-            message: `Checked out successfully. Work hours: ${total_hours}`,
+            message: `Checked out successfully at ${formattedTime}. Work hours: ${total_hours}`,
             attendance: {
                 _id: updated._id,
                 employeeId: updated.employeeId,

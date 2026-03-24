@@ -18,7 +18,7 @@ function isCheckInAllowed(now: Date): boolean {
 
 function isCheckOutAllowed(now: Date): boolean {
     const mins = now.getHours() * 60 + now.getMinutes();
-    return mins >= 12 * 60 && mins <= 18 * 60;
+    return mins >= 12 * 60 && mins <= 23 * 60;
 }
 
 function checkInDisabledReason(now: Date): string | null {
