@@ -74,8 +74,9 @@ export const fmtDate = (iso: string) => {
     return `${d.getFullYear()}/${String(d.getMonth() + 1).padStart(2, "0")}/${String(d.getDate()).padStart(2, "0")}`;
 };
 
-export const fmtTime = (iso: string) =>
-    new Date(iso).toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", hour12: true }).toLowerCase();
+export const fmtTime = (iso: string) => {
+    return iso.split('T')[1].substring(0, 5);
+}
 
 export const statusColor: Record<string, { text: string; bg: string }> = {
     present: { text: C.primary, bg: `${C.primary}18` },
