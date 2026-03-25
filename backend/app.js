@@ -49,12 +49,12 @@ app.use((req, res, next) => {
 
 
 app.get("/", async (req, res) => {
-    console.log(getSriLankaTime())
-    res.send("api is working ")
+    res.send("api is working sdas")
 })
 
 
 app.use("/auth", authRouter);
+app.use("/attendance", attendance);
 app.use(authMiddleware);
 app.use("/notifications", notificationRoutes);
 
@@ -62,7 +62,7 @@ app.use("/notifications", notificationRoutes);
 app.use("/holiday", holiday);
 
 app.use("/project", project);
-app.use("/attendance", attendance);
+
 app.use("/dashboard", dashboard);
 app.use("/departments", departments);
 app.use("/employee", employee);

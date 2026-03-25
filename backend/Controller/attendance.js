@@ -118,15 +118,16 @@ module.exports.deleteAttendanceLog = async (req, res) => {
 module.exports.checkInAttendance = async (req, res) => {
     try {
         const { employeeId } = req.body;
+        console.log(req.body)
 
         if (!employeeId) {
             return f400(null, "Employee ID is required", res);
         }
         const EARLY_CHECKIN = 7 * 60 + 45;
-        const PRESENT_DEADLINE = 8 * 60 + 1
+        const PRESENT_DEADLINE = 8 * 60 + 30;
         const LATE_DEADLINE = 10 * 60 + 0;    // 10:00 - mark as late
         const CHECKOUT_DEADLINE = 12 * 60 + 0; // 12:00 - last check-in time
-        const today = getSriLankaTime();
+        const today = new Date();
         console.log(today)
         const hours = today.getHours();
         const minutes = today.getMinutes();
@@ -166,7 +167,6 @@ module.exports.checkInAttendance = async (req, res) => {
             checkIn: today,
             status
         });
-
         await attendance.save();
 
         return f200({
